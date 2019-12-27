@@ -1,0 +1,17 @@
+---
+
+- name: Install build deps Debian
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ debian_deps }}"
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Install build deps CentOS
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ centos_deps }}"
+  when:
+    - ansible_distribution | lower == "centos"

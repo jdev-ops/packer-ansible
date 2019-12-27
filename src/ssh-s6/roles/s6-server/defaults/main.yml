@@ -1,0 +1,19 @@
+---
+
+ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+debian_deps:
+  - openssh-server
+  - sudo
+  - wget
+  - curl
+  - vim
+  - tmux
+
+centos_deps:
+  - openssh-server
+  - sudo
+  - wget
+  - curl
+  - vim
+  - tmux
