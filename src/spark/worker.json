@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "docker",
-      "image": "jalbert/spark-base:v2.4.4-debian",
+      "image": "jalbert/spark-base:2.4.4-debian",
       "commit": true,
       "changes": [
         "WORKDIR /spark",
@@ -26,7 +26,7 @@
       {
         "type": "docker-tag",
         "repository": "docker.io/jalbert/spark-worker",
-        "tag": "v2.4.4-debian"
+        "tag": "2.4.4-debian"
       },
       "docker-push"
     ]

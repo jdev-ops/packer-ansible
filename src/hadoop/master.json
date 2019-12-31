@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "docker",
-      "image": "jalbert/hadoop-base:v3.2.1-debian",
+      "image": "jalbert/hadoop-base:3.2.1-debian",
       "commit": true,
       "changes": [
         "ENTRYPOINT [\"/init\"]",
@@ -22,7 +22,7 @@
       {
         "type": "docker-tag",
         "repository": "docker.io/jalbert/hadoop-master",
-        "tag": "v3.2.1-debian"
+        "tag": "3.2.1-debian"
       },
       "docker-push"
     ]
