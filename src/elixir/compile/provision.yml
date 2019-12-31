@@ -59,7 +59,13 @@
       raw: git rev-parse --verify HEAD | cut -c1-6
       register: suffix
 
+    - name: Target version
+      raw: >
+        sed -nr 's/(^\s*)version: "(.+)(",)/\2/p' /home/app/src/mix.exs
+      register: version
+
     - name: Target OS
+      # xargs is for removing leading/trailing spaces
       raw: cat /etc/os-release | grep ^PRETTY | cut -c13-50 | tr '"/()' ' ' | xargs | tr ' ' '-'
       register: os_name
 
@@ -68,7 +74,7 @@
       register: build_outputs
 
     - name: Create tar file
-      raw: "tar -cf {{ build_outputs.stdout_lines[0] }}-{{ os_name.stdout | trim() }}-{{ suffix.stdout | trim() }}.tar -C _build/prod/rel {{ build_outputs.stdout_lines[0] }}"
+      raw: "tar -cf {{ build_outputs.stdout_lines[0] }}-{{ version.stdout | trim() }}-{{ os_name.stdout | trim() }}-{{ suffix.stdout | trim() }}.tar -C _build/prod/rel {{ build_outputs.stdout_lines[0] }}"
 
     - name: Removing scripts
       file:
