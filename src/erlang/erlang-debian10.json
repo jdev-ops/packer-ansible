@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "docker",
-      "image": "debian:buster-slim",
+      "image": "jalbert/debian:10",
       "commit": true
     }
   ],

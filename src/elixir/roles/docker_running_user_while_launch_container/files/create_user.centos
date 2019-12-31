@@ -8,9 +8,10 @@ HOME_DIR=/tmp/user
 PASSWD=/var/tmp/passwd
 GROUP=/var/tmp/group
 
-if [ ! -d "$HOME_DIR" ]; then
-  mkdir "$HOME_DIR"
-fi
+#if [ ! -d "$HOME_DIR" ]; then
+#  mkdir "$HOME_DIR"
+#fi
+
 if [ ! -f "$PASSWD" ]; then
   echo "user::$U:$G::$HOME_DIR:" > "$PASSWD"
 fi

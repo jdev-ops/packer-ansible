@@ -2,13 +2,12 @@
   "builders": [
     {
       "type": "docker",
-      "image": "jalbert/erlang:222-centos8",
+      "image": "centos:7",
       "commit": true,
       "changes": [
-        "VOLUME /src",
-        "WORKDIR /src",
-        "ENV OSNAME centos",
-        "ENTRYPOINT [\"entrypoint.sh\"]"
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22",
+        "ENV NOTVISIBLE \"in users profile\""
       ]
     }
   ],
@@ -17,9 +16,7 @@
       "type": "ansible",
       "user": "root",
       "ansible_env_vars": [
-        "ANSIBLE_DISTRIBUTION=centos",
-        "ELIXIR_VERSION=1.9.4",
-        "ERLANG_VERSION=22.2"
+        "ANSIBLE_DISTRIBUTION=centos"
       ],
       "playbook_file": "provision.yml"
     }
@@ -28,8 +25,8 @@
     [
       {
         "type": "docker-tag",
-        "repository": "docker.io/jalbert/elixir",
-        "tag": "19-centos8-compiler-service"
+        "repository": "docker.io/jalbert/centos",
+        "tag": "7"
       },
       "docker-push"
     ]

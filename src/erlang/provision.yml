@@ -24,6 +24,6 @@
   tasks:
     - name: Ensure Erlang configured with role
       include_role:
-        name: erlang
+        name: erlang-local-user
       vars:
         ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"

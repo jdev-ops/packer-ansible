@@ -2,8 +2,13 @@
   "builders": [
     {
       "type": "docker",
-      "image": "centos:7",
-      "commit": true
+      "image": "jalbert/centos:7",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22",
+        "ENV NOTVISIBLE \"in users profile\""
+      ]
     }
   ],
   "provisioners": [

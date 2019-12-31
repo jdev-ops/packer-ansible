@@ -5,10 +5,10 @@
       "image": "jalbert/erlang:222-centos7",
       "commit": true,
       "changes": [
-        "VOLUME /src",
-        "WORKDIR /src",
+        "VOLUME /home/app/src",
+        "WORKDIR /home/app/src",
         "ENV OSNAME centos",
-        "ENTRYPOINT [\"entrypoint.sh\"]"
+        "ENTRYPOINT [\"/init\"]"
       ]
     }
   ],

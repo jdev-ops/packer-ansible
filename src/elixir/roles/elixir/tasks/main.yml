@@ -1,15 +1,27 @@
 ---
 
-- name: Install Erlang/Elixir
+- name: Install Elixir
   import_tasks: install.yml
 
 - name: Putting entrypoint
   template:
     src: templates/entrypoint.sh.j2
-    dest: /usr/local/bin/entrypoint.sh
-    owner: root
-    group: root
+    dest: /home/app/entrypoint.sh
+    owner: app
+    group: app
     mode: u=rx,g=rx,o=rx
 
-- name: Cleanup
-  import_tasks: cleanup.yml
+- name: Putting update_user_ids.sh
+  template:
+    src: files/update_user_ids.centos
+    dest: /home/app/update_user_ids.sh
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx
+
+
+#- name: set CAP_SYS_ADMIN to /usr/local/bin/update_user_ids.sh
+#  raw: setcap CAP_SYS_ADMIN=+eip /usr/local/bin/update_user_ids.sh
+
+#- name: Cleanup
+#  import_tasks: cleanup.yml

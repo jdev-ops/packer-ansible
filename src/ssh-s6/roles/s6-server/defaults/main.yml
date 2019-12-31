@@ -12,6 +12,10 @@ debian_deps:
 
 centos_deps:
   - openssh-server
+  - openssh-clients
+#  - openssh
+#  - iputils
+  - libss
   - sudo
   - wget
   - curl

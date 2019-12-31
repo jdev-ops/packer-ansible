@@ -1,0 +1,62 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: localhost
+  gather_facts: false
+  vars:
+    src_path: "{{ lookup('env','SRC_PATH') }}"
+
+  tasks:
+    - name: Create container
+      docker_container:
+        name: ansible-based-compiler
+        image: "jalbert/elixir:19-debian10"
+#        image: "jalbert/elixir:19-centos7"
+        detach: true
+        interactive: true
+        tty: true
+        debug: yes
+        volumes:
+          - "{{ src_path }}:/home/app/src"
+          - ~/.ssh:/home/app/.ssh
+
+    - name: Ddd docker container to inventory
+      add_host:
+        name: ansible-based-compiler
+        ansible_connection: docker
+        ansible_user: app
+
+- hosts: ansible-based-compiler
+  gather_facts: false
+  vars:
+    user_id: "{{ lookup('env','USER_ID') }}"
+    group_id:  "{{ lookup('env','GROUP_ID') }}"
+    utility_scripts:
+      - release_command.sh
+
+  tasks:
+    - name: Putting scripts
+      copy:
+        src: "bin/{{ item }}"
+        dest: "/home/app/src/bin/{{ item }}"
+        owner: app
+        group: app
+        mode: u+x
+      with_items: "{{ utility_scripts }}"
+
+    - name: Compile project
+      raw: /home/app/entrypoint.sh
+
+    - name: Removing scripts
+      file:
+        path: "/home/app/src/bin/{{ item }}"
+        state: absent
+      with_items: "{{ utility_scripts }}"
+
+- hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: destroy container
+      docker_container:
+        name: ansible-based-compiler
+        state: absent

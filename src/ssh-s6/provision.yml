@@ -18,7 +18,7 @@
       when:
         - ansible_distribution | lower == "centos"
 
-- name: Provision Erlang
+- name: Provision s6-ssh
   hosts: all
 
   tasks:

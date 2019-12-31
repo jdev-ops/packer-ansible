@@ -1,6 +1,6 @@
 ---
 
-- name: Install build deps Debian
+- name: Install deps Debian
   package:
     name: "{{ item }}"
     state: present
@@ -8,7 +8,7 @@
   when:
     - ansible_distribution | lower == "debian"
 
-- name: Install build deps CentOS
+- name: Install deps CentOS
   package:
     name: "{{ item }}"
     state: present
