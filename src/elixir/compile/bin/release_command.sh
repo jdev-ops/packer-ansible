@@ -9,5 +9,7 @@ ssh-agent
 mix local.rebar --force
 mix local.hex --force
 
-make release
+# make release
 
+MIX_QUIET=1 MIX_ENV=prod mix deps.get
+MIX_QUIET=1 MIX_ENV=prod mix release

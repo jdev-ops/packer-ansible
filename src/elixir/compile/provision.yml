@@ -9,8 +9,9 @@
     - name: Create container
       docker_container:
         name: ansible-based-compiler
-        image: "jalbert/elixir:19-debian10"
-#        image: "jalbert/elixir:19-centos7"
+#        image: "jalbert/elixir:19-ubuntu18"
+#        image: "jalbert/elixir:19-debian10"
+        image: "jalbert/elixir:19-centos7"
         detach: true
         interactive: true
         tty: true
@@ -19,7 +20,7 @@
           - "{{ src_path }}:/home/app/src"
           - ~/.ssh:/home/app/.ssh
 
-    - name: Ddd docker container to inventory
+    - name: Add docker container to inventory
       add_host:
         name: ansible-based-compiler
         ansible_connection: docker
@@ -43,8 +44,31 @@
         mode: u+x
       with_items: "{{ utility_scripts }}"
 
+#    - name: Set release version
+#      lineinfile:
+#        path: /home/app/src/mix.exs
+#        regexp: '(^\s*)version: (\".+)\"'
+#        line: >
+#          \1version: \2-{{ os_name.stdout | trim() }}-{{ suffix.stdout | trim() }}",
+#        backrefs: yes
+
     - name: Compile project
       raw: /home/app/entrypoint.sh
+
+    - name: Target git revision
+      raw: git rev-parse --verify HEAD | cut -c1-6
+      register: suffix
+
+    - name: Target OS
+      raw: cat /etc/os-release | grep ^PRETTY | cut -c13-50 | tr '"/()' ' ' | xargs | tr ' ' '-'
+      register: os_name
+
+    - name: Target Project name
+      raw: ls _build/prod/rel
+      register: build_outputs
+
+    - name: Create tar file
+      raw: "tar -cf {{ build_outputs.stdout_lines[0] }}-{{ os_name.stdout | trim() }}-{{ suffix.stdout | trim() }}.tar -C _build/prod/rel {{ build_outputs.stdout_lines[0] }}"
 
     - name: Removing scripts
       file:

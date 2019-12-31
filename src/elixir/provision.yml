@@ -36,13 +36,6 @@
 
     - name: "setting permissions to /etc/passwd"
       raw: chmod 777 /etc/passwd
-      when:
-        - ansible_distribution | lower == "centos"
-
-    - name: "setting permissions to /etc/passwd"
-      raw: chmod 777 /etc/passwd
-      when:
-        - ansible_distribution | lower == "debian"
 
 #    - name: "setting permissions to /etc/group"
 #      raw: chmod 777 /etc/group
