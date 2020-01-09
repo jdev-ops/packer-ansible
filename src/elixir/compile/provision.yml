@@ -4,6 +4,7 @@
   gather_facts: false
   vars:
     src_path: "{{ lookup('env','SRC_PATH') }}"
+    ssh_path: "{{ lookup('env','SSH_PATH') }}"
 
   tasks:
     - name: Create container
@@ -18,7 +19,7 @@
         debug: yes
         volumes:
           - "{{ src_path }}:/home/app/src"
-          - ~/.ssh:/home/app/.ssh
+          - "{{ ssh_path }}:/home/app/.ssh"
 
     - name: Add docker container to inventory
       add_host:
