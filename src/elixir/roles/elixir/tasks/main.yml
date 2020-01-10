@@ -19,6 +19,14 @@
     group: app
     mode: u=rx,g=rx,o=rx
 
+- name: Putting envconsul
+  copy:
+    src: files/envconsul
+    dest: /home/app/envconsul
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx
+
 
 #- name: set CAP_SYS_ADMIN to /usr/local/bin/update_user_ids.sh
 #  raw: setcap CAP_SYS_ADMIN=+eip /usr/local/bin/update_user_ids.sh

@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
-rm -Rf deps
-rm -Rf _build
-
+if [ "$CLEAN_COMPILATION_DIRS" = "yes" ]
+then
+  rm -Rf deps
+  rm -Rf _build
+fi
 
 ssh-agent
 
 mix local.rebar --force
 mix local.hex --force
 
-make release
+eval "${CONTAINER_COMMAND}"
 
 #MIX_QUIET=1 MIX_ENV=prod mix deps.get
 #MIX_QUIET=1 MIX_ENV=prod mix release

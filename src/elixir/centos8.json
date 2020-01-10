@@ -28,8 +28,8 @@
     [
       {
         "type": "docker-tag",
-        "repository": "docker.io/jalbert/elixir",
-        "tag": "19-centos8-compiler-service"
+        "repository": "docker.io/jalbert/elixir-machine-service",
+        "tag": "19-centos8"
       },
       "docker-push"
     ]

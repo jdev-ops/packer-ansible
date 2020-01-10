@@ -28,7 +28,7 @@
     [
       {
         "type": "docker-tag",
-        "repository": "docker.io/jalbert/elixir",
+        "repository": "docker.io/jalbert/elixir-machine-service",
         "tag": "19-debian10"
       },
       "docker-push"
