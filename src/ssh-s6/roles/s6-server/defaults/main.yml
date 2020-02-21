@@ -7,14 +7,19 @@ debian_deps:
   - sudo
   - wget
   - curl
+  - htop
   - vim
   - tmux
+  - iputils-ping
+  - nmap
+  - python3-pip
 
 centos_deps:
   - openssh-server
   - openssh-clients
 #  - openssh
-#  - iputils
+  - iputils
+  - nmap
   - libss
   - sudo
   - wget

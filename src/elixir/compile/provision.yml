@@ -22,6 +22,7 @@
           CONTAINER_COMMAND: "make release"
           CLEAN_COMPILATION_DIRS: "yes"
           USING_CONSUL: "no"
+          GET_IDS_USING_CONSUL: "no"
           CONSUL_ADDR: "172.17.0.2:8500"
           CONSUL_PREFIXES: "-prefix app-config-"
         volumes:

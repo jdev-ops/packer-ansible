@@ -27,3 +27,9 @@
         name: erlang-local-user
       vars:
         ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+    - name: Ensure Python
+      include_role:
+        name: python
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"

@@ -112,7 +112,6 @@
     - name: rename hadoop
       raw: mv /home/app/hadoop* /home/app/hadoop
 
-
     - name: Set NameNode Location
       lineinfile:
         path: /home/app/hadoop/etc/hadoop/core-site.xml

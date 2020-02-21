@@ -1,3 +1,5 @@
 #!/usr/bin/execlineb -P
 
+# exec /usr/bin/one_time.sh
+
 /usr/sbin/sshd -D

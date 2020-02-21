@@ -27,3 +27,9 @@
         name: s6-server
       vars:
         ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+    - name: To provide utilities
+      include_role:
+        name: utilities
+      vars:
+        ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
