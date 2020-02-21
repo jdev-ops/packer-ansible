@@ -1,0 +1,12 @@
+---
+
+ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+binary_apps:
+  - consul-template
+  - direnv
+  - envconsul
+  - jj
+  - jq
+  - venv
+  - wrk

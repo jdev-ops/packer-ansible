@@ -1,0 +1,44 @@
+---
+
+- name: Install build deps Debian
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ python_build_debian_deps }}"
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Install build deps CentOS
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ python_build_centos_deps }}"
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: Creating directory for Python compilation
+  file:
+    path: "{{ python_compilation_working_dir }}"
+    state: directory
+
+- name: Downloading Python src
+  get_url:
+    url: "{{ python_src_url }}"
+    dest: "{{ python_compilation_working_dir }}/Python-{{ python_version }}.tgz"
+
+- name: Unarchive a file that is already on the remote machine
+  unarchive:
+    src: "{{ python_compilation_working_dir }}/Python-{{ python_version }}.tgz"
+    dest: "{{ python_compilation_working_dir }}"
+    remote_src: yes
+
+- name: Putting install script
+  template:
+    src: templates/pinstall.sh.j2
+    dest: "{{ python_compilation_working_dir }}/Python-{{ python_version | replace('\n', '') }}/pinstall.sh"
+    owner: app
+    group: app
+    mode: u=rx,g=rx,o=rx
+
+- name: Building Python
+  raw: "cd {{ python_compilation_working_dir }}/Python-{{ python_version | replace('\n', '') }}/ && ./pinstall.sh"

@@ -1,0 +1,13 @@
+---
+
+- name: Copy all apps to /usr/bin
+  copy:
+    src: "files/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+  with_items: "{{ binary_apps }}"
+
+- name: Install httpie
+  raw: "pip3 install --upgrade pip setuptools && pip3 install --upgrade httpie"
