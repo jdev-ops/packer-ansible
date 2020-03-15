@@ -1,0 +1,32 @@
+---
+
+- name: Provision Python
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Boostrap python
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+
+- name: Provision Fluentd
+  hosts: all
+
+  tasks:
+    - name: "Creates directory: /etc/services.d/fluentd"
+      file:
+        path: /etc/services.d/fluentd
+        state: directory
+
+    - name: Putting /etc/services.d/fluentd/run
+      copy:
+        src: files/services.d/fluentd/run
+        dest: /etc/services.d/fluentd/run
+        owner: root
+        group: root
+        mode: u=rx,g=rx,o=rx
+
+    # https://docs.fluentd.org/installation/install-by-deb
+    # TODO: tunning: https://docs.fluentd.org/installation/before-install
+    # https://www.slideshare.net/brendangregg/how-netflix-tunes-ec2-instances-for-performance
+    # perfromance: https://www.fluentd.org/faqs
+    - name: Install td-agent for Debian Buster
+      raw: curl -L https://toolbelt.treasuredata.com/sh/install-debian-buster-td-agent3.sh | sh

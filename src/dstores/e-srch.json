@@ -2,19 +2,19 @@
   "builders": [
     {
       "type": "docker",
-      "image": "jalbert/debian:10",
-      "commit": true
+      "image": "jalbert/jdk:11-u6-debian",
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22 9200 9300",
+        "ENV NOTVISIBLE \"in users profile\""
+      ]
     }
   ],
   "provisioners": [
     {
       "type": "ansible",
       "user": "root",
-      "ansible_env_vars": [
-        "ANSIBLE_DISTRIBUTION=debian",
-        "ERLANG_VERSION=22.2",
-        "PYTHON_VERSION=3.8.1"
-      ],
       "playbook_file": "provision.yml"
     }
   ],
@@ -22,8 +22,8 @@
     [
       {
         "type": "docker-tag",
-        "repository": "docker.io/jalbert/erlang",
-        "tag": "222-debian10"
+        "repository": "docker.io/jalbert/elasticsearch",
+        "tag": "7.6.1"
       },
       "docker-push"
     ]

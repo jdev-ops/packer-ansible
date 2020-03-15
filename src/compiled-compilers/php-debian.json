@@ -3,7 +3,11 @@
     {
       "type": "docker",
       "image": "jalbert/debian:10",
-      "commit": true
+      "commit": true,
+      "changes": [
+        "ENTRYPOINT [\"/init\"]",
+        "EXPOSE 22 9000"
+      ]
     }
   ],
   "provisioners": [
@@ -12,20 +16,19 @@
       "user": "root",
       "ansible_env_vars": [
         "ANSIBLE_DISTRIBUTION=debian",
-        "ERLANG_VERSION=22.2",
-        "PYTHON_VERSION=3.8.1"
+        "SWOOLE_VERSION=4.4.16",
+        "REPOS_TYPE=debian"
       ],
-      "playbook_file": "provision.yml"
+      "playbook_file": "provision-php.yml"
     }
   ],
   "post-processors": [
     [
       {
         "type": "docker-tag",
-        "repository": "docker.io/jalbert/erlang",
-        "tag": "222-debian10"
-      },
-      "docker-push"
+        "repository": "docker.io/jalbert/php",
+        "tag": "debian10"
+      }
     ]
   ]
 }

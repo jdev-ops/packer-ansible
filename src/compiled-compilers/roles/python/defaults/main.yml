@@ -6,7 +6,7 @@ python_compilation_working_dir: /home/app/temp/python-src
 
 python_build_debian_deps:
   - build-essential
-  - checkinstall
+#  - checkinstall
   - libreadline-gplv2-dev
   - libncursesw5-dev
   - libssl-dev
@@ -22,3 +22,12 @@ python_build_debian_deps:
   - python3-setuptools
   - wget
 
+
+python_build_centos_deps:
+
+  - python3-setuptools
+  - wget
+
+  - openssl-devel
+  - bzip2-devel
+  - libffi-devel

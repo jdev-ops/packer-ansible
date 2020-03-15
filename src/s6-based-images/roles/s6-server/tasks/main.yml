@@ -1,0 +1,212 @@
+---
+
+- name: Install deps
+  import_tasks: install.yml
+
+- name: Putting s6-overlay files
+  unarchive:
+    src: files/s6-overlay-amd64.tar.gz
+    dest: /
+    owner: root
+    group: root
+  when:
+    - ansible_distribution | lower == "debian"
+
+
+- name: Putting s6-overlay files
+  copy:
+    src: files/s6-overlay-amd64.tar.gz
+    dest: /tmp/s6-overlay-amd64.tar.gz
+    owner: root
+    group: root
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: tar xzf /tmp/s6-overlay-amd64.tar.gz -C / --exclude="./bin"
+  raw: tar xzf /tmp/s6-overlay-amd64.tar.gz -C / --exclude="./bin"
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: tar xzf /tmp/s6-overlay-amd64.tar.gz -C /usr ./bin
+  raw: tar xzf /tmp/s6-overlay-amd64.tar.gz -C /usr ./bin
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: rm -Rf /tmp/s6-overlay-amd64.tar.gz
+  raw: rm -Rf /tmp/s6-overlay-amd64.tar.gz
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: "Creates directory: /var/run/sshd"
+  file:
+    path: /var/run/sshd
+    state: directory
+
+- name: ssh 1
+  raw: echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: ssh 2
+  raw: echo "UsePrivilegeSeparation no" >> /etc/ssh/sshd_config
+  when:
+    - ansible_distribution | lower == "centos"
+
+#- name: ssh 3
+#  raw: echo "PermitEmptyPasswords yes" >> /etc/ssh/sshd_config
+
+#- name: ssh 4
+#  raw: sed -i "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+
+
+- name: ssh 1
+  raw: sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: ssh 2
+  raw: sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: touch /root/.Xauthority
+  raw: touch /root/.Xauthority
+
+- name: "Creates directory: /etc/services.d/sshd"
+  file:
+    path: /etc/services.d/sshd
+    state: directory
+
+- name: Putting /etc/services.d/sshd/run
+  copy:
+    src: files/services.d/sshd/run
+    dest: /etc/services.d/sshd/run
+    owner: root
+    group: root
+    mode: u=rx,g=rx,o=rx
+
+- name: Create app group
+  group:
+    name: app
+    state: present
+
+- name: Create user
+  user:
+    name: app
+    state: present
+    group: app
+    shell: /bin/bash
+    groups:
+      - app
+      - staff
+      - sudo
+  when:
+    - ansible_distribution | lower == "debian"
+
+- name: Create user
+  user:
+    name: app
+    state: present
+    group: app
+    shell: /bin/bash
+    groups:
+      - app
+      - wheel
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: "Creates directory: /root/.ssh"
+  file:
+    path: /root/.ssh
+    state: directory
+
+#- name: setting permissions
+#  raw: chmod go-rwx /root/.ssh
+
+- name: Putting id_rsa on root
+  copy:
+    src: files/id_rsa
+    dest: /root/.ssh/id_rsa
+    owner: root
+    group: root
+    mode: u+r
+
+- name: Putting id_rsa.pub on root
+  copy:
+    src: files/id_rsa.pub
+    dest: /root/.ssh/id_rsa.pub
+    owner: root
+    group: root
+    mode: u+r
+
+- name: "Creates directory: /home/app/.ssh"
+  file:
+    path: /home/app/.ssh
+    state: directory
+
+- name: setting permissions
+  raw: chmod go-rwx /home/app/.ssh
+
+- name: Putting id_rsa on app
+  copy:
+    src: files/id_rsa
+    dest: /home/app/.ssh/id_rsa
+    owner: app
+    group: app
+    mode: u+r
+
+- name: Putting id_rsa.pub on app
+  copy:
+    src: files/id_rsa.pub
+    dest: /home/app/.ssh/id_rsa.pub
+    owner: app
+    group: app
+    mode: u+r
+
+- name: Putting id_rsa.pub on app as master.pub
+  copy:
+    src: files/id_rsa.pub
+    dest: /home/app/.ssh/master.pub
+    owner: app
+    group: app
+    mode: u+r
+
+- name: cat 1
+  raw: cat /root/.ssh/id_rsa.pub > /root/.ssh/authorized_keys
+
+- name: cat 2
+  raw: cat /home/app/.ssh/id_rsa.pub > /home/app/.ssh/authorized_keys
+
+- name: setting permissions /root/.ssh/authorized_keys
+  raw: chmod go-rw /root/.ssh/authorized_keys
+
+- name: chown -R root:root /root/.ssh
+  raw: chown -R root:root /root/.ssh
+
+- name: setting permissions /home/app/.ssh/authorized_keys
+  raw: chmod go-rw /home/app/.ssh/authorized_keys
+
+- name: setting permissions /home/app/.ssh
+  raw: chown -R app:app /home/app/.ssh
+
+- name: resetting 400 permissions to root/id_rsa
+  raw: chmod 400 /root/.ssh/id_rsa
+
+- name: resetting 400 permissions to app/id_rsa
+  raw: chmod 400 /home/app/.ssh/id_rsa
+
+- name: key-gen 1
+  raw: /usr/bin/ssh-keygen -q -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -C '' -N ''
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: key-gen 2
+  raw: /usr/bin/ssh-keygen -q -t rsa -f /etc/ssh/ssh_host_rsa_key -C '' -N ''
+  when:
+    - ansible_distribution | lower == "centos"
+
+- name: key-gen 3
+  raw: /usr/bin/ssh-keygen -q -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -C '' -N ''
+  when:
+    - ansible_distribution | lower == "centos"
+

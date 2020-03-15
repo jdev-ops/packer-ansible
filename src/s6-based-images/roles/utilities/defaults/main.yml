@@ -1,0 +1,20 @@
+---
+
+ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
+
+binary_apps:
+  - consul-template
+  - direnv
+  - envconsul
+  - hoverctl
+  - hoverfly
+  - jj
+  - jq
+  - mitmdump
+  - mitmproxy
+  - mitmweb
+  - pathoc
+  - pathod
+  - rg
+  - venv
+  - wrk
