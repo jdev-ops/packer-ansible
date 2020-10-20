@@ -97,3 +97,4 @@ http.cors.allow-origin: 'http://dejavu.service.dc1.consul:1358'
 http.cors.enabled: true
 http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
 http.cors.allow-credentials: true
+cluster.routing.allocation.disk.threshold_enabled: false

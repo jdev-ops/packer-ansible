@@ -9,7 +9,7 @@
   tasks:
 
     - name: Boostrap Python Debian
-      raw: apt-get -y update && apt-get install -y python-minimal
+      raw: apt-get -y update && apt-get install -y python3-minimal
       when:
         - ansible_distribution | lower == "debian"
 
@@ -26,6 +26,9 @@
 
 - name: Provision s6-ssh
   hosts: all
+#  become: yes
+#  become_method: sudo
+#  become_user: root
 
   tasks:
     - name: s6-based server

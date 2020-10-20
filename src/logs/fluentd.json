@@ -23,7 +23,7 @@
       {
         "type": "docker-tag",
         "repository": "docker.io/jalbert/fluentd",
-        "tag": "td-agent_3.6.0"
+        "tag": "td-agent_3.8.0"
       },
       "docker-push"
     ]

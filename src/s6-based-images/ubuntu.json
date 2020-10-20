@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "docker",
-      "image": "ubuntu:18.04",
+      "image": "ubuntu:20.04",
       "commit": true,
       "changes": [
         "ENTRYPOINT [\"/init\"]",
@@ -26,7 +26,7 @@
       {
         "type": "docker-tag",
         "repository": "docker.io/jalbert/ubuntu",
-        "tag": "18.04"
+        "tag": "20.04"
       },
       "docker-push"
     ]

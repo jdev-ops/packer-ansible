@@ -5,7 +5,7 @@
   gather_facts: no
   tasks:
     - name: Boostrap python
-      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python3-minimal)
 
 - name: Provision ElasticSerarch
   hosts: all
@@ -26,19 +26,19 @@
 
     - name: Putting Elasticsearch file
       copy:
-        src: files/elasticsearch-7.6.1-linux-x86_64.tar.gz
-        dest: /home/app/elasticsearch.tgz
+        src: files/elasticsearch-7.9.2-linux-x86_64.tar.gz
+        dest: /home/app/elasticsearch.tar.gz
         owner: app
         group: app
 
     - name: Unpacking
-      raw: tar -xzf /home/app/elasticsearch.tgz -C /home/app/
+      raw: tar -xf /home/app/elasticsearch.tar.gz -C /home/app/
 
     - name: Remove Elasticsearch file
       raw: rm -rf /home/app/elasticsearch.tgz
 
     - name: normalize name
-      raw: mv /home/app/elasticsearch-7.6.1 /home/app/elasticsearch
+      raw: mv /home/app/elasticsearch-7.9.2 /home/app/elasticsearch
 
     - name: updating permissions
       raw: chown -R app:app /home/app/elasticsearch

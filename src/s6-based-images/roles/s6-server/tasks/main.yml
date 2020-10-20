@@ -3,14 +3,14 @@
 - name: Install deps
   import_tasks: install.yml
 
-- name: Putting s6-overlay files
-  unarchive:
-    src: files/s6-overlay-amd64.tar.gz
-    dest: /
-    owner: root
-    group: root
-  when:
-    - ansible_distribution | lower == "debian"
+#- name: Putting s6-overlay files
+#  unarchive:
+#    src: files/s6-overlay-amd64.tar.gz
+#    dest: /
+#    owner: root
+#    group: root
+#  when:
+#    - ansible_distribution | lower == "debian"
 
 
 - name: Putting s6-overlay files
@@ -19,23 +19,15 @@
     dest: /tmp/s6-overlay-amd64.tar.gz
     owner: root
     group: root
-  when:
-    - ansible_distribution | lower == "centos"
 
 - name: tar xzf /tmp/s6-overlay-amd64.tar.gz -C / --exclude="./bin"
   raw: tar xzf /tmp/s6-overlay-amd64.tar.gz -C / --exclude="./bin"
-  when:
-    - ansible_distribution | lower == "centos"
 
 - name: tar xzf /tmp/s6-overlay-amd64.tar.gz -C /usr ./bin
   raw: tar xzf /tmp/s6-overlay-amd64.tar.gz -C /usr ./bin
-  when:
-    - ansible_distribution | lower == "centos"
 
 - name: rm -Rf /tmp/s6-overlay-amd64.tar.gz
   raw: rm -Rf /tmp/s6-overlay-amd64.tar.gz
-  when:
-    - ansible_distribution | lower == "centos"
 
 - name: "Creates directory: /var/run/sshd"
   file:
