@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-#packer build build.json
-packer build custom-build.json
+packer build build.json
+#packer build custom-build.json
