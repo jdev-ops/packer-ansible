@@ -5,7 +5,8 @@
       "image": "ubuntu:20.04",
       "commit": true,
       "changes": [
-        "USER root"
+        "USER root",
+        "WORKDIR /workdir"
       ]
     }
   ],

@@ -10,11 +10,13 @@ binary_apps:
   - hoverfly
   - jj
   - jq
+  - bat
   - mitmdump
   - mitmproxy
   - mitmweb
-  - pathoc
-  - pathod
   - rg
-  - venv
-  - wrk
+  - jless
+  - fd
+  - gum
+#  - venv
+#  - wrk

@@ -2,33 +2,19 @@
 
 ansible_distribution: "{{ lookup('env','ANSIBLE_DISTRIBUTION') }}"
 
-debian_deps:
-  - openssh-server
-  - sudo
+deps:
+#  - openssh-server
+  - libssl-dev
+  - zlib1g-dev
+  - xz-utils
+  - unzip
   - wget
   - curl
-  - htop
-  - vim
-  - tmux
+#  - htop
+#  - vim
+#  - tmux
   - iputils-ping
-  - nmap
-  - python3-pip
-  - inotify-tools
-  - net-tools
-
-centos_deps:
-  - openssh-server
-  - openssh-clients
-#  - openssh
-  - iputils
-  - nmap
-  - libss
-  - sudo
-  - wget
-  - curl
-  - vim
-  - tmux
-  - htop
-  - wget
-  - python3-pip
-  - inotify-tools
+#  - nmap
+#  - python3-pip
+#  - inotify-tools
+#  - net-tools

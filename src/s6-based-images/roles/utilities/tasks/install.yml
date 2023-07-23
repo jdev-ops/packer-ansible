@@ -9,5 +9,5 @@
     mode: u=rx,g=rx,o=rx
   with_items: "{{ binary_apps }}"
 
-- name: Install httpie
-  raw: "pip3 install --upgrade pip setuptools && pip3 install --upgrade httpie"
+#- name: Install httpie
+#  raw: "pip install --upgrade pip setuptools && pip install --upgrade httpie"
