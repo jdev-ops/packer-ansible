@@ -9,10 +9,3 @@
     - git
 #    - openssh-client
 #    - wget
-
-- name: Put just command runner
-  unarchive:
-    src: https://github.com/casey/just/releases/download/1.14.0/just-1.14.0-x86_64-unknown-linux-musl.tar.gz
-    dest: /usr/lib
-    remote_src: yes
-    validate_certs: no

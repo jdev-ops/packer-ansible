@@ -29,7 +29,8 @@ source "docker" "docker-source" {
       "ENV VAULT_API_ADDR \"http://127.0.0.1:8300\"",
       "ENV VAULT_ADDR \"http://127.0.0.1:8300\"",
       "ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 10000",
-      "ENV UNSEAL_KEY \"HuNpzHzI++tm6ntCmLmQ7Yuw5crh62bDMKK47UkByzw=\"",
+      "ENV UNSEAL_KEY \"PHWRdRkRj96fsF4MiWtVn4C3xLWAlAbHKYBWtY747nE=\"",
+      "ENV INITIAL_ROOT_TOKEN \"hvs.i2dp3c46t5WARYsQfeppbDkR\"",
     ]
   commit  = true
   image   = "docker.io/jalbert/ubuntu-basic:22.04"
@@ -51,7 +52,7 @@ build {
   post-processors {
     post-processor "docker-tag" {
       repository = "docker.io/jalbert/vault"
-      tags        = ["1.14.0"]
+      tags        = ["1.14.1"]
       force = true
     }
     post-processor "docker-push" {

@@ -3,7 +3,7 @@
 
 - name: Putting vault binary
   ansible.builtin.unarchive:
-    src: files/vault_1.14.0_linux_amd64.zip
+    src: files/vault_1.14.1_linux_amd64.zip
     dest: /usr/local/bin/
 
 - name: "Creates directory: /etc/s6-overlay/s6-rc.d/vault"

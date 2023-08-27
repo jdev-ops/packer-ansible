@@ -3,7 +3,7 @@
 
 - name: Putting traefik binary
   ansible.builtin.unarchive:
-    src: files/traefik_v2.10.3_linux_amd64.tar.gz
+    src: files/traefik_v2.10.4_linux_amd64.tar.gz
     dest: /usr/local/bin/
 
 - name: "Creates directory: /etc/s6-overlay/s6-rc.d/traefik"
